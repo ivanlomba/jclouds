@@ -48,7 +48,7 @@ public class AutomaticHardwareIdSpec {
 
    public static AutomaticHardwareIdSpec automaticHardwareIdSpecBuilder(double cores, int ram) {
       AutomaticHardwareIdSpec spec = new AutomaticHardwareIdSpec();
-      if (cores == 0 || ram == 0) {
+      if (cores <= 0 || ram == 0) {
          throw new IllegalArgumentException(String.format("Omitted or wrong minCores and minRam. If you" +
                " want to use exact values, please set the minCores and minRam values."));
       }
