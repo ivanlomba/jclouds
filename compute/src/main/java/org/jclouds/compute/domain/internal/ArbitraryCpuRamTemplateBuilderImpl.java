@@ -73,7 +73,7 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
          return super.resolveHardware(hardwarel, images);
       }
       catch (NoSuchElementException ex) {
-         if (super.minCores != 0 && super.minRam != 0) {
+         if (super.minCores > 0 && super.minRam != 0) {
             return automaticHardwareForCpuAndRam(minCores, minRam);
          }
          else throw new IllegalArgumentException("No hardware profile matching the given criteria was found. If " +
