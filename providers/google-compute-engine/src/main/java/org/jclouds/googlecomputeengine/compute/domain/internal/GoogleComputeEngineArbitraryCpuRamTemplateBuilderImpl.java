@@ -16,6 +16,7 @@
  */
 package org.jclouds.googlecomputeengine.compute.domain.internal;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Supplier;
 import org.jclouds.collect.Memoized;
 import org.jclouds.compute.domain.Hardware;
@@ -43,7 +44,7 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl extends Arbit
    }
 
    @Override
-   protected Hardware automaticHardwareForCpuAndRam(double cores, int ram, float disk) {
+   protected Hardware automaticHardware(double cores, int ram, Optional<Float> disk) {
       if (location == null) {
          location = defaultLocation.get();
       }

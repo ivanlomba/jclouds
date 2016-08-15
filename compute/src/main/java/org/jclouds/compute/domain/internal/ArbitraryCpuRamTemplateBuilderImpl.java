@@ -16,6 +16,7 @@
  */
 package org.jclouds.compute.domain.internal;
 
+import com.google.common.base.Optional;
 import com.google.common.base.Supplier;
 import org.jclouds.collect.Memoized;
 import org.jclouds.compute.domain.Hardware;
@@ -46,12 +47,12 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       super(locations, images, hardwares, defaultLocation, optionsProvider, defaultTemplateProvider);
    }
 
-   protected Hardware automaticHardwareForCpuAndRam(double cores, int ram, float diskSize) {
+   protected Hardware automaticHardware(double cores, int ram, Optional<Float> diskSize) {
       HardwareBuilder builder = new HardwareBuilder();
-      if (diskSize != 0.0f)
-         builder.volume(new VolumeImpl(diskSize, true, true));
+      if (diskSize.isPresent()) // check > 0
+         builder.volume(new VolumeImpl(diskSize.get(), true, true));
       return builder
-            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize).toString())
+            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize.or(0.0f)).toString())
             .ram(ram)
             .processor(new Processor(cores, 1.0))
             .build();
@@ -63,7 +64,7 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       } catch (NoSuchElementException ex) {
          if (isAutomaticId(hardwareId)) {
             AutomaticHardwareIdSpec spec = parseId(hardwareId);
-            return automaticHardwareForCpuAndRam(spec.getCores(), spec.getRam(), spec.getDisk());
+            return automaticHardware(spec.getCores(), spec.getRam(), Optional.of(spec.getDisk()));
          }
          else {
             throw ex;
@@ -77,7 +78,7 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       }
       catch (NoSuchElementException ex) {
          if (super.minCores > 0 && super.minRam != 0) {
-            return automaticHardwareForCpuAndRam(minCores, minRam, (float)minDisk);
+            return automaticHardware(minCores, minRam, Optional.of((float)minDisk));
          }
          else throw new IllegalArgumentException("No hardware profile matching the given criteria was found. If " +
                "you want to use exact values, please set the minCores and minRam values", ex);

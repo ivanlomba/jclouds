@@ -86,8 +86,7 @@ public class AutomaticHardwareIdSpecTest {
    @Test(expectedExceptions = IllegalArgumentException.class,
            expectedExceptionsMessageRegExp = "Invalid disk value: -10")
    public void automaticHardwareIdSpecBuilderWrongDiskTest() {
-      float disk = 10;
-      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 2048, -disk);
+      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 2048, -10);
    }
 
 }
