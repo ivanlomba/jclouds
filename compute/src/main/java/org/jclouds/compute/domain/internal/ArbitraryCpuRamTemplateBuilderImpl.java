@@ -49,10 +49,12 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
 
    protected Hardware automaticHardware(double cores, int ram, Optional<Float> diskSize) {
       HardwareBuilder builder = new HardwareBuilder();
-      if (diskSize.isPresent()) // check > 0
-         builder.volume(new VolumeImpl(diskSize.get(), true, true));
+      if (diskSize.isPresent()) {
+         if (diskSize.get() > 0.0f)
+            builder.volume(new VolumeImpl(diskSize.get(), true, true));
+      }
       return builder
-            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize.or(0.0f)).toString())
+            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize).toString())
             .ram(ram)
             .processor(new Processor(cores, 1.0))
             .build();

@@ -18,6 +18,8 @@ package org.jclouds.compute.util;
 
 import org.testng.annotations.Test;
 
+import com.google.common.base.Optional;
+
 import static org.assertj.core.api.Assertions.assertThat;
 
 @Test(groups = "unit", testName = "AutomaticHardwareIdSpecTest")
@@ -64,12 +66,12 @@ public class AutomaticHardwareIdSpecTest {
 
    @Test
    public void automaticHardwareIdSpecBuilderTest() {
-      AutomaticHardwareIdSpec spec = AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 2048, 0.0f);
+      AutomaticHardwareIdSpec spec = AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 2048, Optional.<Float>absent());
       assertThat(spec.getCores()).isEqualTo(2.0);
       assertThat(spec.getRam()).isEqualTo(2048);
       assertThat(spec.getDisk()).isEqualTo(0.0f);
       assertThat(spec.toString()).isEqualTo("automatic:cores=2.0;ram=2048");
-      AutomaticHardwareIdSpec spec2 = AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(4.0, 4096, 10);
+      AutomaticHardwareIdSpec spec2 = AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(4.0, 4096, Optional.of(10.0f));
       assertThat(spec2.getCores()).isEqualTo(4.0);
       assertThat(spec2.getRam()).isEqualTo(4096);
       assertThat(spec2.getDisk()).isEqualTo(10);
@@ -80,13 +82,13 @@ public class AutomaticHardwareIdSpecTest {
          expectedExceptionsMessageRegExp = "Omitted or wrong minCores and minRam. If you want to" +
                " use exact values, please set the minCores and minRam values: cores=2.0, ram=0")
    public void automaticHardwareIdSpecBuilderWrongSpecsTest() {
-      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 0, 0.0f);
+      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 0, Optional.of(0.0f));
    }
 
    @Test(expectedExceptions = IllegalArgumentException.class,
            expectedExceptionsMessageRegExp = "Invalid disk value: -10")
    public void automaticHardwareIdSpecBuilderWrongDiskTest() {
-      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 2048, -10);
+      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 2048, Optional.of(-10.0f));
    }
 
 }
