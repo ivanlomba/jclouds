@@ -42,7 +42,8 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl extends Arbit
       super(locations, images, hardwares, defaultLocation, optionsProvider, defaultTemplateProvider);
    }
 
-   protected Hardware automaticHardwareForCpuAndRam(double cores, int ram) {
+   @Override
+   protected Hardware automaticHardwareForCpuAndRam(double cores, int ram, float disk) {
       if (location == null) {
          location = defaultLocation.get();
       }

@@ -46,9 +46,12 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       super(locations, images, hardwares, defaultLocation, optionsProvider, defaultTemplateProvider);
    }
 
-   protected Hardware automaticHardwareForCpuAndRam(double cores, int ram) {
-      return new HardwareBuilder()
-            .id(automaticHardwareIdSpecBuilder(cores, ram).toString())
+   protected Hardware automaticHardwareForCpuAndRam(double cores, int ram, float diskSize) {
+      HardwareBuilder builder = new HardwareBuilder();
+      if (diskSize != 0.0f)
+         builder.volume(new VolumeImpl(diskSize, true, true));
+      return builder
+            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize).toString())
             .ram(ram)
             .processor(new Processor(cores, 1.0))
             .build();
@@ -60,13 +63,13 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       } catch (NoSuchElementException ex) {
          if (isAutomaticId(hardwareId)) {
             AutomaticHardwareIdSpec spec = parseId(hardwareId);
-            return automaticHardwareForCpuAndRam(spec.getCores(), spec.getRam());
+            return automaticHardwareForCpuAndRam(spec.getCores(), spec.getRam(), spec.getDisk());
          }
          else {
             throw ex;
          }
-        }
-    }
+      }
+   }
 
    protected Hardware resolveHardware(Set<? extends Hardware> hardwarel, final Iterable<? extends Image> images) {
       try {
@@ -74,7 +77,7 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       }
       catch (NoSuchElementException ex) {
          if (super.minCores > 0 && super.minRam != 0) {
-            return automaticHardwareForCpuAndRam(minCores, minRam);
+            return automaticHardwareForCpuAndRam(minCores, minRam, (float)minDisk);
          }
          else throw new IllegalArgumentException("No hardware profile matching the given criteria was found. If " +
                "you want to use exact values, please set the minCores and minRam values", ex);

@@ -138,8 +138,8 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImplTest {
       replay(defaultTemplate, optionsProvider, templateBuilderProvider, getImageStrategy);
       TemplateBuilderImpl templateBuilder = new GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl(locations,
             new ImageCacheSupplier(images, 60,
-            Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
-            Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
+                  Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
+                  Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
       templateBuilder.minRam(4096);
       templateBuilder.minCores(2);
       Hardware hardware = templateBuilder.build().getHardware();
@@ -165,8 +165,8 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImplTest {
       replay(defaultTemplate, optionsProvider, templateBuilderProvider, getImageStrategy);
       TemplateBuilderImpl templateBuilder = new GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl(locations,
             new ImageCacheSupplier(images, 60,
-            Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
-            Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
+                  Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
+                  Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
       templateBuilder.minRam(1024);
       templateBuilder.minCores(2);
       Hardware hardware = templateBuilder.build().getHardware();
@@ -192,8 +192,8 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImplTest {
       replay(defaultTemplate, optionsProvider, templateBuilderProvider, getImageStrategy);
       TemplateBuilderImpl templateBuilder = new GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl(locations,
             new ImageCacheSupplier(images, 60,
-            Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
-            Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
+                  Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
+                  Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
       templateBuilder.minCores(4);
       templateBuilder.build().getHardware();
    }
@@ -215,8 +215,8 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImplTest {
       replay(defaultTemplate, optionsProvider, templateBuilderProvider, getImageStrategy);
       TemplateBuilderImpl templateBuilder = new GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl(locations,
             new ImageCacheSupplier(images, 60,
-            Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
-            Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
+                  Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
+                  Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
       templateBuilder.minRam(4096);
       templateBuilder.build().getHardware();
    }
@@ -238,8 +238,8 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImplTest {
       replay(defaultTemplate, optionsProvider, templateBuilderProvider, getImageStrategy);
       TemplateBuilderImpl templateBuilder = new GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl(locations,
             new ImageCacheSupplier(images, 60,
-            Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
-            Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
+                  Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
+                  Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
       templateBuilder.minCores(2);
       Hardware hardware = templateBuilder.build().getHardware();
       assertThat(hardware.getRam()).isEqualTo(2048);
@@ -265,8 +265,8 @@ public class GoogleComputeEngineArbitraryCpuRamTemplateBuilderImplTest {
       replay(defaultTemplate, optionsProvider, templateBuilderProvider, getImageStrategy);
       TemplateBuilderImpl templateBuilder = new GoogleComputeEngineArbitraryCpuRamTemplateBuilderImpl(locations,
             new ImageCacheSupplier(images, 60,
-            Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
-            Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
+                  Atomics.<AuthorizationException>newReference(), Providers.of(getImageStrategy)), hardwares,
+                  Suppliers.ofInstance(region), optionsProvider, templateBuilderProvider);
       templateBuilder.minRam(1024);
       Hardware hardware = templateBuilder.build().getHardware();
       assertThat(hardware.getRam()).isEqualTo(2048);
