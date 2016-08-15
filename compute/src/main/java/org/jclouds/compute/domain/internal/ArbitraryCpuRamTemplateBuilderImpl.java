@@ -66,7 +66,7 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       } catch (NoSuchElementException ex) {
          if (isAutomaticId(hardwareId)) {
             AutomaticHardwareIdSpec spec = parseId(hardwareId);
-            return automaticHardware(spec.getCores(), spec.getRam(), Optional.of(spec.getDisk()));
+            return automaticHardware(spec.getCores(), spec.getRam(), spec.getDisk());
          }
          else {
             throw ex;

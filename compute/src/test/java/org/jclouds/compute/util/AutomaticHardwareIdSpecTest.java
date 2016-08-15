@@ -82,7 +82,7 @@ public class AutomaticHardwareIdSpecTest {
          expectedExceptionsMessageRegExp = "Omitted or wrong minCores and minRam. If you want to" +
                " use exact values, please set the minCores and minRam values: cores=2.0, ram=0")
    public void automaticHardwareIdSpecBuilderWrongSpecsTest() {
-      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 0, Optional.of(0.0f));
+      AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 0, Optional.<Float>absent());
    }
 
    @Test(expectedExceptions = IllegalArgumentException.class,
