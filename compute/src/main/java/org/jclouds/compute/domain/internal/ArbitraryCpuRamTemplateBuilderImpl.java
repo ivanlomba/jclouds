@@ -54,7 +54,7 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
             builder.volume(new VolumeImpl(diskSize.get(), true, true));
       }
       return builder
-            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize).toString())
+            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize.or(Optional.<Float>absent())).toString())
             .ram(ram)
             .processor(new Processor(cores, 1.0))
             .build();
@@ -80,7 +80,10 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       }
       catch (NoSuchElementException ex) {
          if (super.minCores > 0 && super.minRam != 0) {
-            return automaticHardware(minCores, minRam, Optional.of((float)minDisk));
+            if (minDisk < 0) {
+               throw new IllegalArgumentException(String.format("Invalid disk value: %.0f", minDisk));
+            }
+            return automaticHardware(minCores, minRam, minDisk == 0 ? Optional.<Float>absent() : Optional.of((float)minDisk));
          }
          else throw new IllegalArgumentException("No hardware profile matching the given criteria was found. If " +
                "you want to use exact values, please set the minCores and minRam values", ex);

@@ -42,7 +42,7 @@ public class AutomaticHardwareIdSpecTest {
       AutomaticHardwareIdSpec parser2 = AutomaticHardwareIdSpec.parseId("automatic:cores=2;ram=4096;disk=100");
       assertThat(parser2.getRam()).isEqualTo(4096);
       assertThat(parser2.getCores()).isEqualTo(2);
-      assertThat(parser2.getDisk()).isEqualTo(100);
+      assertThat(parser2.getDisk().get()).isEqualTo(100);
    }
 
    @Test(expectedExceptions = IllegalArgumentException.class)
@@ -69,12 +69,11 @@ public class AutomaticHardwareIdSpecTest {
       AutomaticHardwareIdSpec spec = AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(2.0, 2048, Optional.<Float>absent());
       assertThat(spec.getCores()).isEqualTo(2.0);
       assertThat(spec.getRam()).isEqualTo(2048);
-      assertThat(spec.getDisk()).isEqualTo(0.0f);
       assertThat(spec.toString()).isEqualTo("automatic:cores=2.0;ram=2048");
       AutomaticHardwareIdSpec spec2 = AutomaticHardwareIdSpec.automaticHardwareIdSpecBuilder(4.0, 4096, Optional.of(10.0f));
       assertThat(spec2.getCores()).isEqualTo(4.0);
       assertThat(spec2.getRam()).isEqualTo(4096);
-      assertThat(spec2.getDisk()).isEqualTo(10);
+      assertThat(spec2.getDisk().get()).isEqualTo(10);
       assertThat(spec2.toString()).isEqualTo("automatic:cores=4.0;ram=4096;disk=10");
    }
 

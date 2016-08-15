@@ -25,7 +25,7 @@ public class AutomaticHardwareIdSpec {
 
    private double cores;
    private int ram;
-   private Optional<Float> disk;
+   private Optional<Float> disk = Optional.absent();
 
    public static boolean isAutomaticId(String id) {
       return id.startsWith("automatic:");
@@ -63,10 +63,8 @@ public class AutomaticHardwareIdSpec {
          throw new IllegalArgumentException(String.format("Omitted or wrong minCores and minRam. If you want to" +
                " use exact values, please set the minCores and minRam values: cores=%s, ram=%s", cores, ram));
       }
-      if (disk.isPresent()) {
-         if (disk.get() < 0.0f) {
+      if (disk.isPresent() && disk.get() <= 0.0f) {
             throw new IllegalArgumentException(String.format("Invalid disk value: %.0f", disk.get()));
-         }
       }
       spec.disk = disk;
       spec.cores = cores;
