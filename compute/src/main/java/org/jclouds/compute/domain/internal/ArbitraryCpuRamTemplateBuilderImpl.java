@@ -49,12 +49,11 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
 
    protected Hardware automaticHardware(double cores, int ram, Optional<Float> diskSize) {
       HardwareBuilder builder = new HardwareBuilder();
-      if (diskSize.isPresent()) {
-         if (diskSize.get() > 0.0f)
+      if (diskSize.isPresent() && diskSize.get() > 0.0f) {
             builder.volume(new VolumeImpl(diskSize.get(), true, true));
       }
       return builder
-            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize.or(Optional.<Float>absent())).toString())
+            .id(automaticHardwareIdSpecBuilder(cores, ram, diskSize).toString())
             .ram(ram)
             .processor(new Processor(cores, 1.0))
             .build();
@@ -80,7 +79,8 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
       }
       catch (NoSuchElementException ex) {
          if (minCores <= 0 || minRam == 0 || minDisk < 0) {
-            throw new IllegalArgumentException("Please, set minCores, minRam and minDisk to positive values.");
+            throw new IllegalArgumentException("No hardware profile matching the given criteria was found. If you" +
+                    " want to use exact values, please set the minCores, minRam and minDisk to positive values.");
          }
          return automaticHardware(minCores, minRam, minDisk == 0 ? Optional.<Float>absent() : Optional.of((float)minDisk));
       }
