@@ -79,14 +79,10 @@ public class ArbitraryCpuRamTemplateBuilderImpl extends TemplateBuilderImpl {
          return super.resolveHardware(hardwarel, images);
       }
       catch (NoSuchElementException ex) {
-         if (super.minCores > 0 && super.minRam != 0) {
-            if (minDisk < 0) {
-               throw new IllegalArgumentException(String.format("Invalid disk value: %.0f", minDisk));
-            }
-            return automaticHardware(minCores, minRam, minDisk == 0 ? Optional.<Float>absent() : Optional.of((float)minDisk));
+         if (minCores <= 0 || minRam == 0 || minDisk < 0) {
+            throw new IllegalArgumentException("Please, set minCores, minRam and minDisk to positive values.");
          }
-         else throw new IllegalArgumentException("No hardware profile matching the given criteria was found. If " +
-               "you want to use exact values, please set the minCores and minRam values", ex);
+         return automaticHardware(minCores, minRam, minDisk == 0 ? Optional.<Float>absent() : Optional.of((float)minDisk));
       }
    }
 
